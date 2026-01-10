@@ -5,8 +5,8 @@ import { supabase } from './lib/supabase';
 import { AuthForm } from './components/AuthForm';
 import { TradeHistory } from './components/TradeHistory';
 import { EnergyProduction } from './components/EnergyProduction';
-import { createEnergyTrade } from './lib/energyTrading';
 import { Toaster } from 'react-hot-toast';
+import { Session } from '@supabase/supabase-js';
 
 const mockData = [
   { time: '00:00', energy: 4, price: 0.12 },
@@ -18,7 +18,7 @@ const mockData = [
 ];
 
 function App() {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [userType, setUserType] = useState<string>('');
 
   useEffect(() => {
@@ -83,15 +83,16 @@ function App() {
               <div className="text-sm text-gray-600">
                 {session.user.email}
               </div>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button className="p-2 rounded-full hover:bg-gray-100" aria-label="Profile">
                 <User className="h-6 w-6 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button className="p-2 rounded-full hover:bg-gray-100" aria-label="Settings">
                 <Settings className="h-6 w-6 text-gray-600" />
               </button>
               <button
                 onClick={handleSignOut}
                 className="p-2 rounded-full hover:bg-gray-100"
+                aria-label="Sign out"
               >
                 <LogOut className="h-6 w-6 text-gray-600" />
               </button>

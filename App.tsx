@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Session } from '@supabase/supabase-js';
 import { Battery, Zap, ArrowLeftRight, BarChart3, Settings, User, LogOut } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import { AuthForm } from './components/AuthForm';
 import { TradeHistory } from './components/TradeHistory';
 import { EnergyProduction } from './components/EnergyProduction';
-import { createEnergyTrade } from './lib/energyTrading';
 import { Toaster } from 'react-hot-toast';
 
 const mockData = [
@@ -18,7 +18,7 @@ const mockData = [
 ];
 
 function App() {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [userType, setUserType] = useState<string>('');
 
   useEffect(() => {
@@ -83,14 +83,21 @@ function App() {
               <div className="text-sm text-gray-600">
                 {session.user.email}
               </div>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button
+                aria-label="User profile"
+                className="p-2 rounded-full hover:bg-gray-100"
+              >
                 <User className="h-6 w-6 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button
+                aria-label="Settings"
+                className="p-2 rounded-full hover:bg-gray-100"
+              >
                 <Settings className="h-6 w-6 text-gray-600" />
               </button>
               <button
                 onClick={handleSignOut}
+                aria-label="Sign out"
                 className="p-2 rounded-full hover:bg-gray-100"
               >
                 <LogOut className="h-6 w-6 text-gray-600" />

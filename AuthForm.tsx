@@ -46,8 +46,12 @@ export function AuthForm() {
         if (signInError) throw signInError;
         toast.success('Signed in successfully!');
       }
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('An unexpected error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }

@@ -84,6 +84,7 @@ export class Blockchain {
     this.pendingTransactions.push(newTransaction);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async minePendingTransactions(minerAddress: string): Promise<void> {
     const block: Omit<Block, 'hash'> = {
       index: this.chain.length,

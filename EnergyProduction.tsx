@@ -41,9 +41,11 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
 
           if (error) throw error;
           
-        } catch (error: any) {
+        } catch (error) {
           toast.error('Failed to update energy production');
-          console.error('Error:', error.message);
+          if (error instanceof Error) {
+            console.error('Error:', error.message);
+          }
         }
       }, interval * 1000);
     }
@@ -62,9 +64,11 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
         pricePerUnit: 0.15
       });
       toast.success('Energy production updated');
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Failed to update energy production');
-      console.error('Error:', error.message);
+      if (error instanceof Error) {
+        console.error('Error:', error.message);
+      }
     }
   };
 

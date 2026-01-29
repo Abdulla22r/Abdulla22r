@@ -83,14 +83,15 @@ function App() {
               <div className="text-sm text-gray-600">
                 {session.user.email}
               </div>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button aria-label="User profile" className="p-2 rounded-full hover:bg-gray-100">
                 <User className="h-6 w-6 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button aria-label="Settings" className="p-2 rounded-full hover:bg-gray-100">
                 <Settings className="h-6 w-6 text-gray-600" />
               </button>
               <button
                 onClick={handleSignOut}
+                aria-label="Sign out"
                 className="p-2 rounded-full hover:bg-gray-100"
               >
                 <LogOut className="h-6 w-6 text-gray-600" />

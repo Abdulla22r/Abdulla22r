@@ -83,15 +83,25 @@ function App() {
               <div className="text-sm text-gray-600">
                 {session.user.email}
               </div>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button
+                className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
+                aria-label="User Profile"
+                title="User Profile"
+              >
                 <User className="h-6 w-6 text-gray-600" />
               </button>
-              <button className="p-2 rounded-full hover:bg-gray-100">
+              <button
+                className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
+                aria-label="Settings"
+                title="Settings"
+              >
                 <Settings className="h-6 w-6 text-gray-600" />
               </button>
               <button
                 onClick={handleSignOut}
-                className="p-2 rounded-full hover:bg-gray-100"
+                className="p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
+                aria-label="Sign Out"
+                title="Sign Out"
               >
                 <LogOut className="h-6 w-6 text-gray-600" />
               </button>

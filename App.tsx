@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Battery, Zap, ArrowLeftRight, BarChart3, Settings, User, LogOut } from 'lucide-react';
-import { supabase } from './lib/supabase';
-import { AuthForm } from './components/AuthForm';
-import { TradeHistory } from './components/TradeHistory';
-import { EnergyProduction } from './components/EnergyProduction';
-import { createEnergyTrade } from './lib/energyTrading';
+import { supabase } from './supabase';
+import { AuthForm } from './AuthForm';
+import { TradeHistory } from './TradeHistory';
+import { EnergyProduction } from './EnergyProduction';
+import { createEnergyTrade } from './energyTrading';
 import { Toaster } from 'react-hot-toast';
 
 const mockData = [

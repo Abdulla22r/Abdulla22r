@@ -1,6 +1,6 @@
 import React from 'react';
-import { getBlockchainHistory } from '../lib/energyTrading';
-import { Transaction } from '../lib/blockchain';
+import { getBlockchainHistory } from './energyTrading';
+import { Transaction } from './blockchain';
 
 export function TradeHistory() {
   const [trades, setTrades] = React.useState<Transaction[]>([]);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from './supabase';
 import toast from 'react-hot-toast';
 import { Zap, Mail, Lock, User } from 'lucide-react';
 

@@ -10,6 +10,7 @@ interface EnergyProductionProps {
 
 export function EnergyProduction({ userId }: EnergyProductionProps) {
   const [currentProduction, setCurrentProduction] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [autoUpdate, setAutoUpdate] = useState(false);
   const [interval, setInterval] = useState(5);
   const [energySource, setEnergySource] = useState<'solar' | 'wind'>('solar');
@@ -54,6 +55,7 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
   }, [autoUpdate, interval, userId, energySource]);
 
   const handleManualUpdate = async () => {
+    setIsUpdating(true);
     try {
       await createEnergyTrade({
         fromUserId: userId,
@@ -65,6 +67,8 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
     } catch (error: any) {
       toast.error('Failed to update energy production');
       console.error('Error:', error.message);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -77,9 +81,11 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
 
       <div className="space-y-6">
         {/* Energy Source Selection */}
-        <div className="flex gap-4">
+        <div className="flex gap-4" role="radiogroup" aria-label="Energy Source selection">
           <button
             onClick={() => setEnergySource('solar')}
+            role="radio"
+            aria-checked={energySource === 'solar'}
             className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border transition-colors ${
               energySource === 'solar'
                 ? 'bg-yellow-50 border-yellow-500 text-yellow-700'
@@ -91,6 +97,8 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
           </button>
           <button
             onClick={() => setEnergySource('wind')}
+            role="radio"
+            aria-checked={energySource === 'wind'}
             className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border transition-colors ${
               energySource === 'wind'
                 ? 'bg-blue-50 border-blue-500 text-blue-700'
@@ -103,7 +111,7 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
         </div>
 
         {/* Current Production Display */}
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-gray-50 rounded-lg p-4" aria-live="polite">
           <div className="text-sm text-gray-600 mb-1">Current Production</div>
           <div className="text-3xl font-bold text-gray-900">
             {currentProduction.toFixed(2)} kWh
@@ -126,9 +134,18 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
             />
             <button
               onClick={handleManualUpdate}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              disabled={isUpdating}
+              aria-label={isUpdating ? "Updating energy production" : undefined}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[80px]"
             >
-              Update
+              {isUpdating ? (
+                <svg className="animate-spin h-5 w-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                'Update'
+              )}
             </button>
           </div>
         </div>
@@ -141,11 +158,15 @@ export function EnergyProduction({ userId }: EnergyProductionProps) {
             </label>
             <button
               onClick={() => setAutoUpdate(!autoUpdate)}
+              role="switch"
+              aria-checked={autoUpdate}
+              aria-label="Auto Update"
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                 autoUpdate ? 'bg-green-600' : 'bg-gray-200'
               }`}
             >
               <span
+                aria-hidden="true"
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
                   autoUpdate ? 'translate-x-6' : 'translate-x-1'
                 }`}
